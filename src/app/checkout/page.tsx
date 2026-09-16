@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -34,7 +34,7 @@ export default function CheckoutPage() {
   const [coupon, setCoupon] = useState('');
 
   if (!room || !property) {
-    return <div className="py-24 text-center">Invalid booking selection</div>;
+    return <div className="py-24 text-center text-xl font-bold">Invalid booking selection. Please go back and try again.</div>;
   }
 
   const basePrice = room.pricePerHour * duration;
@@ -43,14 +43,11 @@ export default function CheckoutPage() {
   const taxes = Math.round((basePrice + experiencePrice) * 0.12);
   const totalAmount = basePrice + experiencePrice + serviceFee + taxes;
 
-  // Placeholder functions for Razorpay
   const handlePayment = async () => {
-    console.log('Initiating payment for ₹', totalAmount);
-
-    // Simulate a successful payment flow
+    // Simulate payment process
     setTimeout(() => {
       router.push(`/booking/success?id=CM-${Math.floor(Math.random() * 900000) + 100000}`);
-    }, 1500);
+    }, 1000);
   };
 
   return (
@@ -72,7 +69,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Left Column: Details & Payment */}
           <div className="lg:col-span-2 space-y-12">
-            {/* Booking Summary Card (Mobile Friendly) */}
+            {/* Booking Summary Card */}
             <div className="bg-neutral-50 p-8 rounded-[40px] border border-neutral-100">
               <h3 className="text-xl font-bold mb-6">Booking Details</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,7 +98,7 @@ export default function CheckoutPage() {
 
             {/* Payment Methods */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-bold">Select Payment Method</h3>
+              <h3 className="text-2xl font-bold text-foreground">Select Payment Method</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   { id: 'upi', name: 'UPI (GPay, PhonePe, Paytm)', icon: Smartphone },
@@ -123,7 +120,7 @@ export default function CheckoutPage() {
                     )}>
                       <method.icon className="w-6 h-6" />
                     </div>
-                    <span className="font-bold">{method.name}</span>
+                    <span className="font-bold text-foreground">{method.name}</span>
                   </div>
                 ))}
               </div>
@@ -237,6 +234,5 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
-  </div>
   );
 }
