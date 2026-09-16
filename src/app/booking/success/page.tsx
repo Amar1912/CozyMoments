@@ -1,204 +1,65 @@
+// app/booking/success/page.tsx
 'use client';
 
-import React, { Suspense } from 'react';
-import Link from 'next/link';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import {
-  CheckCircle2,
-  MapPin,
-  Calendar,
-  Clock,
-  Download,
-  Share2,
-  ArrowRight,
-} from 'lucide-react';
+import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-
-function BookingSuccessContent() {
+// Component that handles the actual search params logic
+function SuccessContent() {
   const searchParams = useSearchParams();
-
-  const bookingId = searchParams.get('id') || 'CM-829472';
+  const bookingId = searchParams.get('booking_id') || searchParams.get('session_id');
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-20 text-center">
-
-      {/* Success Icon */}
-      <div className="mb-12 inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full animate-in zoom-in duration-500">
-        <CheckCircle2 className="w-12 h-12 text-green-600" />
+    <div className="max-w-md w-full bg-white shadow-lg rounded-xl p-8 border border-gray-100 text-center">
+      <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+        </svg>
       </div>
 
-      {/* Heading */}
-      <h1 className="text-4xl md:text-5xl font-bold mb-6">
-        Your Moment Is Booked!
-      </h1>
-
-      <p className="text-lg text-muted-foreground mb-12 max-w-lg mx-auto">
-        A confirmation has been sent to your email and mobile number.
-        Get ready for your cozy experience.
+      <h1 className="text-2xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
+      <p className="text-gray-600 mb-6">
+        Thank you for your order. We have sent a confirmation details to your email.
       </p>
 
-      {/* Booking Card */}
-      <Card className="rounded-[40px] overflow-hidden shadow-2xl border-none bg-neutral-900 text-white text-left mb-12">
-        <CardContent className="p-8 md:p-12">
+      {bookingId ? (
+        <div className="bg-gray-50 p-3 rounded-md mb-6 text-sm text-gray-700 font-mono">
+          Booking ID: <span className="font-semibold text-gray-900">{bookingId}</span>
+        </div>
+      ) : (
+        <div className="bg-yellow-50 p-3 rounded-md mb-6 text-sm text-yellow-800">
+          No booking ID found in URL.
+        </div>
+      )}
 
-          {/* Booking ID */}
-          <div className="flex justify-between items-start mb-10">
-            <div>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">
-                Booking ID
-              </div>
-
-              <div className="text-2xl font-bold text-accent">
-                {bookingId}
-              </div>
-            </div>
-
-            <Badge className="bg-green-500/20 text-green-400 border border-green-500/30">
-              Confirmed
-            </Badge>
-          </div>
-
-          {/* Booking Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-
-            {/* Location */}
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-
-                <div>
-                  <div className="font-bold">
-                    Cozy Moments Nashik Central
-                  </div>
-
-                  <div className="text-xs text-neutral-400">
-                    College Road, Nashik
-                  </div>
-                </div>
-              </div>
-
-              {/* Date */}
-              <div className="flex items-start space-x-3">
-                <Calendar className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-
-                <div>
-                  <div className="font-bold">
-                    Sunday, Sept 20, 2026
-                  </div>
-
-                  <div className="text-xs text-neutral-400">
-                    Date of Check-in
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Time & Room */}
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <Clock className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-
-                <div>
-                  <div className="font-bold">
-                    10:00 AM - 12:00 PM
-                  </div>
-
-                  <div className="text-xs text-neutral-400">
-                    Duration: 2 Hours
-                  </div>
-                </div>
-              </div>
-
-              {/* Room */}
-              <div className="flex items-start space-x-3">
-                <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-
-                <div>
-                  <div className="font-bold">
-                    Premium Haven
-                  </div>
-
-                  <div className="text-xs text-neutral-400">
-                    Room Category
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-wrap gap-4 pt-8 border-t border-white/10">
-
-            <Button
-              variant="outline"
-              className="bg-white/5 border-white/20 hover:bg-white/10 text-white rounded-xl"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Receipt
-            </Button>
-
-            <Button
-              variant="outline"
-              className="bg-white/5 border-white/20 hover:bg-white/10 text-white rounded-xl"
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({
-                    title: 'Booking Confirmed',
-                    text: `My booking ID is ${bookingId}`,
-                    url: window.location.href,
-                  });
-                }
-              }}
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share
-            </Button>
-
-            <Link
-              href="/account/bookings"
-              className="ml-auto"
-            >
-              <Button className="bg-accent text-primary font-bold hover:bg-accent/90 rounded-xl">
-                My Bookings
-              </Button>
-            </Link>
-
-          </div>
-
-        </CardContent>
-      </Card>
-
-      {/* Back Home */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <Link
-          href="/"
-          className="text-primary font-bold hover:underline flex items-center"
-        >
-          Back to Home
-          <ArrowRight className="ml-2 w-4 h-4" />
-        </Link>
-      </div>
-
+      <Link
+        href="/"
+        className="inline-block bg-blue-600 text-white font-medium px-6 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Return to Home
+      </Link>
     </div>
   );
 }
 
+// Fallback UI shown while Next.js prepares search parameters
+function LoadingFallback() {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+      <p className="text-gray-600 text-sm">Loading booking details...</p>
+    </div>
+  );
+}
+
+// Main page export wrapped in Suspense boundary to prevent build-time prerender errors
 export default function BookingSuccessPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-muted-foreground">
-            Loading booking confirmation...
-          </div>
-        </div>
-      }
-    >
-      <BookingSuccessContent />
-    </Suspense>
+    <main className="min-h-screen flex items-center justify-center p-6 bg-gray-50">
+      <Suspense fallback={<LoadingFallback />}>
+        <SuccessContent />
+      </Suspense>
+    </main>
   );
 }
