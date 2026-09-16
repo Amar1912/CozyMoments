@@ -11,16 +11,32 @@ import { Badge } from '@/components/ui/badge';
 import RoomCard from '@/components/shared/RoomCard';
 import { cities, properties, rooms } from '@/data/mock';
 
+// Fallback dummy city data
+const createDummyCity = (slug: string) => ({
+  id: 'dummy-city-id',
+  slug: slug || 'city',
+  name: slug ? slug.charAt(0).toUpperCase() + slug.slice(1) : 'Explore City',
+  image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80',
+  propertyCount: 5,
+  roomCount: 12,
+});
+
 export default function CityDetailsPage() {
   const { city: citySlug } = useParams();
-  const city = cities.find(c => c.slug === citySlug);
 
-  if (!city) {
-    return <div className="py-24 text-center">City not found</div>;
+  // Find matching city or fallback to generated dummy city
+  const city = cities.find(c => c.slug === citySlug) || createDummyCity(String(citySlug));
+
+  // Get matching properties/rooms, fallback to standard mock items if none match
+  let cityProperties = properties.filter(p => p.cityId === city.id);
+  if (cityProperties.length === 0) {
+    cityProperties = properties.slice(0, 2); // Fallback dummy properties
   }
 
-  const cityProperties = properties.filter(p => p.cityId === city.id);
-  const cityRooms = rooms.filter(r => cityProperties.some(p => p.id === r.propertyId));
+  let cityRooms = rooms.filter(r => cityProperties.some(p => p.id === r.propertyId));
+  if (cityRooms.length === 0) {
+    cityRooms = rooms.slice(0, 3); // Fallback dummy rooms
+  }
 
   return (
     <div className="flex flex-col w-full">
@@ -59,7 +75,7 @@ export default function CityDetailsPage() {
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-3">Area</h4>
                   <div className="space-y-2">
-                    {['College Road', 'Gangapur Road', 'Panchavati', 'Indira Nagar'].map(area => (
+                    {['Downtown', 'Central Hub', 'North Avenue', 'Riverside'].map(area => (
                       <label key={area} className="flex items-center space-x-3 cursor-pointer group">
                         <div className="w-4 h-4 border border-neutral-300 rounded group-hover:border-primary transition-colors" />
                         <span className="text-sm text-neutral-600 group-hover:text-primary">{area}</span>
