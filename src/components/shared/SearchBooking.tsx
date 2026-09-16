@@ -45,7 +45,7 @@ const SearchBooking = () => {
         <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1 flex items-center">
           <MapPin className="w-3 h-3 mr-1 text-primary" /> Where are you going?
         </label>
-        <Select value={city} onValueChange={setCity}>
+        <Select value={city} onValueChange={(val) => setCity(val ?? 'nashik')}>
           <SelectTrigger className="w-full h-12 bg-neutral-50 border-neutral-200 rounded-xl focus:ring-primary/20">
             <SelectValue placeholder="Select City" />
           </SelectTrigger>
@@ -80,7 +80,6 @@ const SearchBooking = () => {
               mode="single"
               selected={date}
               onSelect={setDate}
-              initialFocus
             />
           </PopoverContent>
         </Popover>
@@ -104,7 +103,7 @@ const SearchBooking = () => {
         <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1 flex items-center">
           <Hourglass className="w-3 h-3 mr-1 text-primary" /> Duration
         </label>
-        <Select value={duration} onValueChange={setDuration}>
+        <Select value={duration} onValueChange={(val) => setDuration(val ?? '2')}>
           <SelectTrigger className="w-full h-12 bg-neutral-50 border-neutral-200 rounded-xl">
             <SelectValue placeholder="Duration" />
           </SelectTrigger>

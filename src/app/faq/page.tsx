@@ -62,7 +62,7 @@ export default function FAQPage() {
 
       <Card className="rounded-[40px] overflow-hidden border-none shadow-xl bg-white mb-16">
         <CardContent className="p-8 md:p-12">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion className="w-full">
             {faqs.map((faq, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`} className="border-b-neutral-100">
                 <AccordionTrigger className="text-left font-bold text-lg py-6 hover:text-primary transition-colors">

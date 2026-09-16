@@ -173,7 +173,7 @@ export default function RoomDetailsPage() {
               <h3 className="text-2xl font-bold mb-8 flex items-center">
                 <Info className="w-6 h-6 mr-2 text-primary" /> Frequently Asked Questions
               </h3>
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion className="w-full">
                 <AccordionItem value="item-1" className="border-b-neutral-200">
                   <AccordionTrigger className="text-left font-bold py-6">Can unmarried couples book this room?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-base pb-6">

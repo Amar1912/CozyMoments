@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { CheckCircle2, MapPin, Calendar, Clock, Download, Share2, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function BookingSuccessPage() {
   const searchParams = useSearchParams();

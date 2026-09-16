@@ -76,7 +76,7 @@ export default function RoomsPage() {
 
         <div className="w-full lg:w-48 space-y-2">
           <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground ml-1">Category</label>
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+          <Select value={categoryFilter} onValueChange={(val) => setCategoryFilter(val ?? 'all')}>
             <SelectTrigger className="h-11 bg-white">
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
@@ -91,7 +91,7 @@ export default function RoomsPage() {
 
         <div className="w-full lg:w-48 space-y-2">
           <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground ml-1">Price Range</label>
-          <Select value={priceFilter} onValueChange={setPriceFilter}>
+          <Select value={priceFilter} onValueChange={(val) => setPriceFilter(val ?? 'all')}>
             <SelectTrigger className="h-11 bg-white">
               <SelectValue placeholder="All Prices" />
             </SelectTrigger>

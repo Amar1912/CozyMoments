@@ -200,7 +200,7 @@ export default function Home() {
 
           <div className="mt-20 text-center">
             <Link href="/booking">
-              <Button size="lg" variant="accent" className="h-14 px-12 rounded-2xl font-bold text-primary">Get Started Now</Button>
+              <Button size="lg" variant="secondary" className="h-14 px-12 rounded-2xl font-bold text-primary">Get Started Now</Button>
             </Link>
           </div>
         </div>
