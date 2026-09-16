@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+export const dynamic = 'force-dynamic'; // Add this line at the top
+
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Filter, Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import RoomCard from '@/components/shared/RoomCard';
 import { rooms } from '@/data/mock';
 import { Room } from '@/data/types';
@@ -17,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-export default function RoomsPage() {
+function RoomsContent() {
   const searchParams = useSearchParams();
   const [filteredRooms, setFilteredRooms] = useState<Room[]>(rooms);
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,7 +41,7 @@ export default function RoomsPage() {
       result = result.filter(room => room.category.toLowerCase() === categoryFilter.toLowerCase());
     }
 
-    // Filter by price (simplified for mock)
+    // Filter by price
     if (priceFilter === 'low') {
       result = result.filter(room => room.pricePerHour <= 400);
     } else if (priceFilter === 'mid') {
@@ -132,5 +133,13 @@ export default function RoomsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function RoomsPage() {
+  return (
+    <Suspense fallback={<div className="max-w-7xl mx-auto px-6 md:px-12 py-12">Loading rooms...</div>}>
+      <RoomsContent />
+    </Suspense>
   );
 }
